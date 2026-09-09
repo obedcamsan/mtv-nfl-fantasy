@@ -1,0 +1,50 @@
+:root {
+  --font-display: "Anton", "Archivo Black", "Impact", sans-serif;
+  --font-interface: "Inter", "Archivo", "Segoe UI", sans-serif;
+}
+
+.text-display-hero {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.text-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.text-display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.text-eyebrow {
+  font-family: var(--font-interface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.text-body {
+  font-family: var(--font-interface);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.text-meta {
+  font-family: var(--font-interface);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}

@@ -1,0 +1,62 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch-flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  93% {
+    opacity: 0.85;
+    transform: translateX(-1px);
+  }
+  95% {
+    opacity: 0.9;
+    transform: translateX(1px);
+  }
+}
+
+.reveal-up {
+  animation: reveal-up var(--motion-medium) var(--ease-out) both;
+}
+
+.fade-in {
+  animation: fade-in var(--motion-medium) var(--ease-out) both;
+}
+
+.glitch-accent {
+  animation: glitch-flicker 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-up,
+  .fade-in,
+  .glitch-accent {
+    animation: none !important;
+  }
+}

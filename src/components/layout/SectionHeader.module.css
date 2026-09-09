@@ -1,0 +1,19 @@
+.header {
+  margin-bottom: var(--space-12);
+  max-width: 720px;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--accent-secondary);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.description {
+  margin: var(--space-4) 0 0;
+  max-width: 60ch;
+}

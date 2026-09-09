@@ -1,43 +1,65 @@
-# base-custom-app
+# MTV League NFL Fantasy 2026 — Draft Headquarters
 
-Reusable base repository for bootstrapping new **secure, production-ready custom web applications** with [Claude Code](https://claude.com/claude-code), using the `/build-app` command defined in [.claude/commands/build-app.md](.claude/commands/build-app.md).
+A React + TypeScript + Vite single-page site presenting the results of the 2026 MTV League NFL Fantasy Draft: 10 franchises, 10 managers, 14 rounds, 140 picks, full rosters, and an interactive Draft Board.
 
-This repository is **not an application**. It contains no product code and should stay that way — it is a starting point you instantiate once per new project.
+The frontend is built GraphQL-ready via Apollo Client. In `local` mode (the default) it reads a bundled dataset through a local Apollo Link, shaped exactly like the target GraphQL schema — so switching to a real GraphQL API later (`remote` mode) requires no component changes.
 
-## How it's meant to be used
+## Stack
 
-1. **Turn this into a GitHub template repository** (one-time setup, already recommended):
-   `Settings → General → Template repository` → check the box.
-2. **For every new project**, click **"Use this template" → "Create a new repository"** on GitHub — not "Fork".
-   A fork stays linked to this repo's history and network, which is meant for contributing changes back upstream. "Use this template" instead gives the new project a clean, independent repository with a single initial commit and no shared history — what you want since each generated app is an unrelated product.
-3. Clone the new repository locally and open it in Claude Code (CLI, VSCode extension, or desktop app).
-4. Write the new app's functional requirements as one or more Markdown files under [specs/](specs/), using [specs/TEMPLATE.md](specs/TEMPLATE.md) as the starting point per module. See [specs/README.md](specs/README.md) for details.
-5. Run the bootstrap command, attaching your spec files with `@`:
+React · TypeScript · Vite · Apollo Client · GraphQL · React Router · CSS Modules
 
-   ```text
-   /build-app <PROJECT_NAME> <STACK_PROFILE> <DEPLOYMENT_TARGET> <PRIMARY_DOMAIN> @specs/001-users.md @specs/002-billing.md
-   ```
+## Getting started
 
-   - `STACK_PROFILE`: `NODE_POSTGRES` | `NEXT_POSTGRES` | `PHP_MYSQL`
-   - `DEPLOYMENT_TARGET`: `RAILWAY` | `LINUX_EL8_VPS` | `LINUX_EL8_CPANEL`
-
-   If any argument is missing/invalid, or no spec files are attached, Claude will stop and ask instead of guessing — these choices lock in an architecture that's expensive to reverse later.
-
-6. Claude Code will first produce a short architecture assessment (selected stack, modules discovered, entities, roles, database model, auth/authorization strategy, deployment plan, assumptions, risks), then proceed to actually build the application: migrations, auth with forced first-password-change, RBAC, branding/settings, the business modules from your specs, tests, and the documentation set under `docs/` (`ARCHITECTURE.md`, `DATABASE.md`, `SECURITY.md`, `MODULES.md`, `PERMISSIONS.md`, `DEPLOYMENT.md`, `ENVIRONMENT.md`, `API.md`, `CHANGELOG.md`, `IMPLEMENTATION_STATUS.md`).
-7. Keep the `specs/` files in the new repo — they remain the source of truth if you invoke `/build-app` again later to add a module.
-
-## Repository layout
-
-```text
-.claude/commands/build-app.md   The bootstrap command (the master prompt + argument handling)
-specs/README.md                 How to write functional-requirement docs for /build-app
-specs/TEMPLATE.md               Per-module spec template to copy for each module
-CLAUDE.md                       Guardrail: keeps this repo generic, points to /build-app
+```bash
+npm install
+npm run dev       # start the dev server
+npm run test      # run the draft-logic unit tests
+npm run lint       # ESLint
+npm run build      # type-check + production build
+npm run preview    # preview the production build locally
 ```
 
-Everything else (`package.json`, `docs/`, database migrations, application code, `.env.example`, etc.) is generated **inside the new project repository** by `/build-app` — it does not exist here.
+## Environment variables
 
-## Notes
+Copy `.env.example` to `.env` and adjust as needed:
 
-- Never commit real product code, `.env` files, or generated `docs/*.md` back into this base repo — they belong in the project repo created from the template.
-- If you improve the bootstrap process itself (e.g. tightening a security requirement in the master prompt), edit `.claude/commands/build-app.md` here so every future project benefits.
+```env
+VITE_DATA_MODE=local
+VITE_GRAPHQL_ENDPOINT=
+```
+
+- `VITE_DATA_MODE=local` (default) — resolves the `League2026` query against `src/data/league-2026.ts` via a local Apollo Link (`src/lib/apollo/localLink.ts`). No server required.
+- `VITE_DATA_MODE=remote` — routes the same query to `VITE_GRAPHQL_ENDPOINT` via `HttpLink`. All `VITE_*` values are public in the browser; never put secrets here.
+
+## ⚠️ Pending: real draft data
+
+`src/data/league-2026.ts` currently has the 10 real teams/managers filled in, but **`players` and the 140 picks are empty** — the actual draft results (player, position, NFL team, and which team/round/slot drafted them) haven't been supplied yet. Every section that depends on picks (Teams Grid first picks, First Round, Rosters, Draft Board) renders its intentional empty state until that data is added.
+
+To populate it, add entries to the `rawPicks` array in that file using `"round.slot"` notation (the source data's own display convention — see `src/lib/draft/normalize.ts` for how it's parsed into `overallPick`/`draftSlot`/`chronologicalPickInRound`), plus corresponding `Player` objects. Run `npm run dev` afterward — `validateLeagueData()` logs any structural problems (wrong pick counts, duplicate picks, unknown team/player references, etc.) to the console in development.
+
+## Project structure
+
+```text
+src/
+├── app/              App shell composition, router, Apollo provider
+├── components/       layout, navigation, league, teams, players, draft, ui
+├── data/             local dataset (league-2026.ts)
+├── graphql/          fragments, queries, query result types
+├── hooks/            useLeague, useDraft, useTeamRoster
+├── lib/
+│   ├── apollo/       Apollo Client + local/remote link
+│   ├── draft/        snake-draft normalization, board/stats/validation logic
+│   └── utils/        slugs, player identity, position theming
+├── styles/           design tokens, typography, animations, globals
+└── types/            core domain model (Player, FantasyTeam, DraftPick, League)
+```
+
+## Draft logic notes
+
+- **Source of truth**: `overallPick`, `round`, `draftSlot`, `teamId`, `playerId` — never the `displayPick` string ("1.04"), which is presentation-only.
+- **Snake draft**: the number after the dot in `round.slot` notation is the team's original draft slot, not its chronological order within the round. `src/lib/draft/normalize.ts` derives `chronologicalPickInRound` and `overallPick` from it generically (works for any team count). Covered by tests in `src/lib/draft/normalize.test.ts`, including the required `2.10 → overall 11` / `2.01 → overall 20` cases.
+- **Draft Board columns** represent draft slots (fixed), not chronological pick order — see `src/lib/draft/board.ts`.
+
+## Data model
+
+See `src/types/league.ts` and the GraphQL contract in `src/graphql/queries/league.ts`. `roundPick` in the GraphQL schema maps to the internal `draftSlot` field (see the comment in `src/lib/apollo/localLink.ts`).

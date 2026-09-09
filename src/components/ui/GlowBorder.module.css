@@ -1,0 +1,12 @@
+.glow {
+  --glow-color: var(--accent-primary);
+  position: relative;
+  border-radius: inherit;
+  transition: box-shadow var(--motion-medium) var(--ease-out);
+}
+
+.glow:hover,
+.glow:focus-within {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--glow-color) 55%, transparent),
+    0 0 32px -8px var(--glow-color);
+}

@@ -1,0 +1,40 @@
+.strip {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.chip {
+  --chip-color: var(--accent-primary);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--chip-color);
+  background: var(--surface-secondary);
+}
+
+.label {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--chip-color);
+}
+
+.count {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .strip {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

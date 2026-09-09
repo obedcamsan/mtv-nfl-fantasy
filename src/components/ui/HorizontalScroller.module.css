@@ -1,0 +1,15 @@
+.scroller {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scroll-snap-type: x proximity;
+  padding-bottom: var(--space-3);
+}
+
+.scroller > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}

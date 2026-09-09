@@ -1,0 +1,16 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-primary);
+  scroll-margin-top: 96px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}

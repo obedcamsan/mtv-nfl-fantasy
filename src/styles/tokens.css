@@ -1,0 +1,52 @@
+:root {
+  --bg-primary: #080a0e;
+  --bg-secondary: #0d1016;
+
+  --surface-primary: #10141b;
+  --surface-secondary: #151a22;
+
+  --text-primary: #f5f7fa;
+  --text-secondary: #a4acb9;
+  --text-muted: #727c8b;
+
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --content-max: 1440px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  --accent-primary: #ff2d55;
+  --accent-secondary: #ffd60a;
+
+  --pos-qb: #ff2d55;
+  --pos-qb-glow: rgba(255, 45, 85, 0.35);
+  --pos-rb: #34c759;
+  --pos-rb-glow: rgba(52, 199, 89, 0.35);
+  --pos-wr: #0a84ff;
+  --pos-wr-glow: rgba(10, 132, 255, 0.35);
+  --pos-te: #ffd60a;
+  --pos-te-glow: rgba(255, 214, 10, 0.35);
+  --pos-k: #bf5af2;
+  --pos-k-glow: rgba(191, 90, 242, 0.35);
+  --pos-def: #8e8e93;
+  --pos-def-glow: rgba(142, 142, 147, 0.35);
+
+  --motion-fast: 200ms;
+  --motion-medium: 350ms;
+  --motion-slow: 550ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

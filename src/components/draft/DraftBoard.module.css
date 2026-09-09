@@ -1,0 +1,16 @@
+.wrapper {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  max-height: 720px;
+  overflow-y: auto;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+}

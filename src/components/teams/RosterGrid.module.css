@@ -1,0 +1,12 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    /* 14 picks / 7 columns = exactly 2 full rows, every breakpoint. */
+    grid-template-columns: repeat(7, 1fr);
+  }
+}

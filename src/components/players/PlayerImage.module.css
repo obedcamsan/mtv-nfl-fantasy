@@ -1,0 +1,18 @@
+.image,
+.placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  background: var(--surface-primary);
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--border-strong);
+  font-family: var(--font-display);
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
